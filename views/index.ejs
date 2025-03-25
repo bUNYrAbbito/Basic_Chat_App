@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whatsapp Chats</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h3>All Chats</h3>
+
+        <form method="GET" action="/chats/new">
+            <button type="submit">➕ Add Chat</button>
+        </form>
+
+        <br>
+
+        <div class="chat-container">
+            <% if (chats.length > 0) { %>
+                <% chats.forEach(chat => { %>
+                    <div class="chat <%= chat.from === 'You' ? 'sender' : 'receiver' %>">
+                        <p><strong>From:</strong> <%= chat.from %></p>
+                        <p class="message"><%= chat.msg %>
+                        <form method="GET" action="/chats/<%= chat.id%>/edit">
+                        
+                        <button>edit</button></form>
+                        <form action="/chats/<%= chat._id %>?_method=DELETE" method="POST">
+    <button>
+        Delete
+    </button>
+</form>
+
+                        </p>
+                        <p><strong>To:</strong> <%= chat.to %></p>
+                        <div class="timestamp">📅 <%= chat.created_at.toLocaleString() %></div>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <p>No chats found.</p>
+            <% } %>
+        </div>
+    </div>
+
+</body>
+</html>
